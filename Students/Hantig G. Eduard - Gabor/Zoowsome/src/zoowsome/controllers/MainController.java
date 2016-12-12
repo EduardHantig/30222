@@ -1,9 +1,13 @@
 package zoowsome.controllers;
 
 import zoowsome.models.animals.Animal;
-import zoowsome.services.factories.AnimalFactory;
-import zoowsome.services.factories.Constants;
-import zoowsome.services.factories.SpeciesFactory;
+import zoowsome.models.employees.Caretaker;
+import zoowsome.services.factories.animal.AnimalFactory;
+import zoowsome.services.factories.animal.Constants;
+import zoowsome.services.factories.animal.SpeciesFactory;
+import zoowsome.services.factories.employee.EmployeeFactory;
+import zoowsome.services.factories.employee.TypeEmployeeFactory;
+
 import java.util.Random;
 
 public class MainController {
@@ -25,21 +29,72 @@ public class MainController {
 
 		// Tipurile de animal
 		
-		AnimalFactory abstractFactory = new AnimalFactory();		// Crearea fabricii de animale
+		AnimalFactory animalFactory = new AnimalFactory();		// Crearea fabricii de animale
 		Random random = new Random();		// Pentru Randomizarea speciilor si tipurilor de animale.
-		final int COUNTER = 50; 		// Counter-ul care poate fi setat la oricec valoare
-		Animal animal[] = new Animal[COUNTER];		// Crearea celor 50 de obiecte reprezentate de animale
+		Animal animal[] = new Animal[Constants.Numbers.NR_OF_ANIMALS];	
 	
-		for(int i = 0; i < COUNTER; i++) {
+		for(int i = 0; i < Constants.Numbers.NR_OF_ANIMALS; i++) {
 			int index = random.nextInt(constantSpecies.length);
-			SpeciesFactory speciesFactory = abstractFactory.getSpeciesFactory(constantSpecies[index]);
-			animal[i] = speciesFactory.getAnimal(constantAnimals[index][random.nextInt(constantAnimals[index].length)]);
+			SpeciesFactory animalspeciesFactory = animalFactory.getSpeciesFactory(constantSpecies[index]);
+			animal[i] = animalspeciesFactory.getAnimal(constantAnimals[index][random.nextInt(constantAnimals[index].length)]);
 		}
 		
 		// Afisarea celor 50 de animale create
-		for(int i = 0; i< 50; i++) {
+		for(int i = 0; i< Constants.Numbers.NR_OF_ANIMALS; i++) {
 			System.out.printf("Animal nr %d: %s\n", i+1, animal[i].getName()); 
 		}		
+		
+		Caretaker caretaker[] = new Caretaker[Constants.Numbers.NR_OF_CARETAKERS];
+		EmployeeFactory employeeFactory = new EmployeeFactory();
+		TypeEmployeeFactory typeEmployeeFactory = employeeFactory.getTypeEmployeeFactory(Constants.TypeOfEmployees.CARETAKER);
+		
+		for (int i = 0; i < Constants.Numbers.NR_OF_CARETAKERS; i++) {
+			caretaker[i] = (Caretaker) typeEmployeeFactory.getEmployeeFactory(Constants.TypeOfEmployees.CARETAKER);
+		}
+		
+		System.out.println();
+		System.out.println("The Caretakers are: ");
+		for(Caretaker thisCaretaker : caretaker) {
+				System.out.println(thisCaretaker.getName());
+		}
+		
+		for (Caretaker thisCaretaker : caretaker) {
+			for (Animal thisAnimal : animal) {
+				if (!thisCaretaker.isDead() && !thisAnimal.isTakenCareOf()) {
+					String result = thisCaretaker.takeCareOf(thisAnimal);
+					if (result.equals(Constants.Employee.Caretakers.TCO_KILLED)) {
+						thisCaretaker.setDead(true);
+					}
+					else if (result.equals(Constants.Employee.Caretakers.TCO_NO_TIME)) {
+					}
+					else {
+						thisAnimal.setTakenCareOf(true);
+					}
+				}
+			}
+		}
+		System.out.println();
+		System.out.println("Animals that has been taken care of:");
+		for (int i = 0; i< Constants.Numbers.NR_OF_ANIMALS; i++) {
+			if (animal[i].isTakenCareOf()) {
+			System.out.println("Animal nr " + (i+1) + " " + animal[i].getName()); 
+			}
+		}		
+		System.out.println();
+		System.out.println("Animals that has NOT been taken care of:");
+		for (int i = 0; i< Constants.Numbers.NR_OF_ANIMALS; i++) {
+			if (!animal[i].isTakenCareOf()) {
+			System.out.println("Animal nr " + (i+1) + " " + animal[i].getName()); 
+			}
+		}		
+		System.out.println();
+		System.out.println("Caretakers alive: ");
+		for(Caretaker thisCaretaker : caretaker) {
+			if (!thisCaretaker.isDead()) {
+			System.out.println(thisCaretaker.getName());
+			}
+	}
+			
 	}
 }
 

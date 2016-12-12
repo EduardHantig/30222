@@ -1,6 +1,13 @@
-package zoowsome.services.factories;
+package zoowsome.services.factories.animal;
+
 
 public final class Constants {
+	public static final class Numbers {
+		public static final int NR_OF_CARETAKERS = 15;
+		public static final int NR_OF_ANIMALS = 18;
+		public static final int MAX_SALARY = 10000;
+		public static final int MAX_WORKING_HOURS = 10;
+	}
 
 	public static final class Species {
 		public static final String MAMMAL = "Mammal";
@@ -8,6 +15,22 @@ public final class Constants {
 		public static final String BIRD = "Bird";
 		public static final String AQUATIC = "Aquatic";
 		public static final String INSECT = "Insect";
+	}
+	
+	public static final class TypeOfEmployees {
+		public static final String CARETAKER = "Caretaker";
+	}
+	
+	public static final class Employee {
+		
+		public static final class Caretakers {
+			public static final String TCO_SUCCESS = "Succes";
+			public static final String TCO_KILLED = "Killed";
+			public static final String TCO_NO_TIME = "No_time";
+			public static final String NAME[] = {"Eduard","Raluca", "Matei", "Alexandru", "Luiza", 
+												 "Mihai", "Cosmin", "Francisc", "Mădălina", "Daniela", 
+												 "Petrică", "Oana", "Victor", "Marius", "Loredana"};
+		}
 	}
 	
 	public static final class Animals {
