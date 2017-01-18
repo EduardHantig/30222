@@ -1,6 +1,13 @@
 package zoowsome.models.animals;
 
+import static zoowsome.repositories.AnimalRepository.createNode;
+
 import java.time.LocalTime;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
+
+import zoowsome.services.factories.animal.Constants;
 
 public class Snake extends Reptile {
 
@@ -9,6 +16,10 @@ public class Snake extends Reptile {
 		setNrOfLegs(0);
 		setName("Snake");
 		super.setLaysEggs(true);
+	}
+	
+	public Snake() {
+		this(0, "Snake", true, 0.09, 0.45);
 	}
 	
 	public Snake(int nrOfLegs, String name, boolean laysEggs, double maintenanceCost, double dangerPerc) {
@@ -25,5 +36,10 @@ public class Snake extends Reptile {
 			return 0.25;
 		}
 		return 0;
+	}
+	
+	public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException {
+		super.encodeToXml(eventWriter);
+		createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Reptile.SNAKE);
 	}
 }

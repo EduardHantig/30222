@@ -2,12 +2,14 @@ package zoowsome.controllers;
 
 import zoowsome.models.animals.Animal;
 import zoowsome.models.employees.Caretaker;
+import zoowsome.repositories.AnimalRepository;
 import zoowsome.services.factories.animal.AnimalFactory;
 import zoowsome.services.factories.animal.Constants;
 import zoowsome.services.factories.animal.SpeciesFactory;
 import zoowsome.services.factories.employee.EmployeeFactory;
 import zoowsome.services.factories.employee.TypeEmployeeFactory;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainController {
@@ -32,12 +34,17 @@ public class MainController {
 		AnimalFactory animalFactory = new AnimalFactory();		// Crearea fabricii de animale
 		Random random = new Random();		// Pentru Randomizarea speciilor si tipurilor de animale.
 		Animal animal[] = new Animal[Constants.Numbers.NR_OF_ANIMALS];	
-	
+		AnimalRepository animalRep = new AnimalRepository();
+		ArrayList<Animal> animals = new ArrayList<Animal>();
+		
 		for(int i = 0; i < Constants.Numbers.NR_OF_ANIMALS; i++) {
 			int index = random.nextInt(constantSpecies.length);
 			SpeciesFactory animalspeciesFactory = animalFactory.getSpeciesFactory(constantSpecies[index]);
 			animal[i] = animalspeciesFactory.getAnimal(constantAnimals[index][random.nextInt(constantAnimals[index].length)]);
+			animals.add(animal[i]);
 		}
+		
+		animalRep.save(animals);
 		
 		// Afisarea celor 50 de animale create
 		for(int i = 0; i< Constants.Numbers.NR_OF_ANIMALS; i++) {

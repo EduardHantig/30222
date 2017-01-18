@@ -1,6 +1,13 @@
 package zoowsome.models.animals;
 
+import static zoowsome.repositories.AnimalRepository.createNode;
+
 import java.time.LocalTime;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
+
+import zoowsome.services.factories.animal.Constants;
 
 public class Spider extends Insect {
 
@@ -11,6 +18,11 @@ public class Spider extends Insect {
 		super.setCanFly(false);
 		super.setDangerous(false);
 	}
+	
+	public Spider() {
+		this(8, "Spider", false, false, 0.01, 0);
+	}
+	
 	
 	public Spider(int nrOfLegs, String name, boolean canFly, boolean isDangerous, double maintenanceCost, double dangerPerc) {
 		super(maintenanceCost, dangerPerc);
@@ -29,5 +41,10 @@ public class Spider extends Insect {
 			return 0.25;
 		}
 		return 0;
+	}
+	
+	public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException {
+		super.encodeToXml(eventWriter);
+		createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Insect.SPIDER);
 	}
 }

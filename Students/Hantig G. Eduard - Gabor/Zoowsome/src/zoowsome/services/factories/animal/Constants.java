@@ -9,14 +9,6 @@ public final class Constants {
 		public static final int MAX_WORKING_HOURS = 10;
 	}
 
-	public static final class Species {
-		public static final String MAMMAL = "Mammal";
-		public static final String REPTILE = "Reptile";
-		public static final String BIRD = "Bird";
-		public static final String AQUATIC = "Aquatic";
-		public static final String INSECT = "Insect";
-	}
-	
 	public static final class TypeOfEmployees {
 		public static final String CARETAKER = "Caretaker";
 	}
@@ -32,6 +24,15 @@ public final class Constants {
 												 "Petrică", "Oana", "Victor", "Marius", "Loredana"};
 		}
 	}
+	
+	public static final class Species {
+		public static final String MAMMAL = "Mammal";
+		public static final String REPTILE = "Reptile";
+		public static final String BIRD = "Bird";
+		public static final String AQUATIC = "Aquatic";
+		public static final String INSECT = "Insect";
+	}
+	
 	
 	public static final class Animals {
 		
@@ -64,5 +65,9 @@ public final class Constants {
 			public static final String SHARK = "Shark";
 			public static final String FROG = "Frog";
 		}
+	}
+	public static final class XML_TAGS {
+		public static final String DISCRIMINANT = "Discriminant";
+		public static final String ANIMAL = "Animal";
 	}
 }
